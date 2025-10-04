@@ -1,35 +1,9 @@
-# air.toml
+root = "." # The root directory of the project
+tmp_dir = "tmp" # The temporary directory where air will store its temporary files
 
-# Root directory for the project
-root = "."
-tmp_dir = "tmp"
-
-# Watch these directories and files
-[watcher]
-  # File extensions to watch
-  extensions = ["go", "tpl", "tmpl", "html"]
-  # Ignore files or folders (regex)
-  ignore = ["tmp/*", "vendor/*"]
-
-# Build and run settings
-[build]
-  # Main Go file to build (relative to root)
-  cmd = "go build -o ./tmp/main ."
-  bin = "tmp/main"
-  full_bin = ""
-  delay = 1000
-  exclude_dir = ["assets", "tmp", "vendor"]
-  include_ext = ["go"]
-  exclude_ext = ["swp"]
-  log = "build.log"
-
-# Logging
-[log]
-  level = "debug"
-
-# Enable/disable app restart on file save
-[color]
-  main = "yellow"
-  watcher = "cyan"
-  build = "green"
-  runner = "magenta"
+[build] # The build configuration
+  bin = "main" # The name of the binary file to be generated after building the project
+  cmd = "go build -o {{.Output}} {{.Input}}" # The command to build the project
+  exclude = ["tmp/*", "client/*"]  # Specifies the directories to be excluded from monitoring for changes
+  include = ["**/*.go"] # Specifies the file patterns to be included for monitoring.
+  ignore = ["tmp/*"] # Specifies the files or directories to be ignored when triggering a build.
